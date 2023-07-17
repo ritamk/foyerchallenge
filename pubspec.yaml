@@ -83,6 +83,24 @@ flutter:
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Regular.ttf
+    - family: Playfair
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/RobotoCondensed-Regular.ttf
+    - family: YujiBoku
+      fonts:
+        - asset: assets/fonts/YujiBoku-Regular.ttf
+    - family: SourceCode
+      fonts:
+        - asset: assets/fonts/SourceCodePro-Regular.ttf
+    - family: IndieFlower
+      fonts:
+        - asset: assets/fonts/IndieFlower-Regular.ttf
+    - family: Caveat
+      fonts:
+        - asset: assets/fonts/Caveat-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

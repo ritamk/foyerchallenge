@@ -14,9 +14,9 @@ class _LocationListViewState extends State<LocationListView> {
     return ListView.builder(
       shrinkWrap: true,
       primary: false,
-      itemCount: 1,
+      itemCount: 14,
       itemBuilder: (BuildContext context, int index) {
-        return DeviceProfileTile();
+        return const DeviceProfileTile();
       },
     );
   }
