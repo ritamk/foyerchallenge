@@ -18,7 +18,7 @@ class _WelcomeWrapper extends ConsumerState<WelcomeWrapper> {
   bool goHome = false;
 
   Future<void> getProfiles() async {
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 2));
     List<ProfileModel>? profiles = LocalStorage.getProfileData();
     String? selected = LocalStorage.getSelectedData();
 

@@ -17,6 +17,7 @@ class DeviceProfileTile extends ConsumerWidget {
     return InkWell(
       onTap: () async {
         await LocalStorage.setSelectedData(profile.name);
+        ref.read(selectedProvider.notifier).state = profile.name;
         ref.read(colorProvider.notifier).state =
             THEMES[profile.color] ?? Colors.green;
         ref.read(fontProvider.notifier).state = profile.font;
@@ -31,7 +32,7 @@ class DeviceProfileTile extends ConsumerWidget {
             BoxShadow(
               blurRadius: 12.0,
               spreadRadius: 1.0,
-              color: Theme.of(context).primaryColor.withAlpha(100),
+              color: THEMES[profile.color]!.withAlpha(100),
             ),
           ],
         ),

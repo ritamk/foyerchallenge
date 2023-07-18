@@ -7,7 +7,7 @@ import 'package:foyerchallenge/wrapper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
-  // await LocalStorage.deleteAllProfileData();
+  await LocalStorage.deleteAllProfileData();
   runApp(const ProviderScope(child: MyApp()));
 }
 

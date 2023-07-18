@@ -32,24 +32,36 @@ class HomeView extends ConsumerWidget {
                   child: Container(
                     padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
                       color: Theme.of(context).primaryColor,
-                      borderRadius: BorderRadius.circular(25.0),
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 12.0,
+                          spreadRadius: 1.0,
+                          color: Theme.of(context).primaryColor.withAlpha(100),
+                        ),
+                      ],
                     ),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        style: TextStyle(
-                            color: Theme.of(context).indicatorColor,
-                            fontFamily: "Montserrat"),
-                        children: const [
-                          TextSpan(
-                              text: "Please create a new profile\n",
-                              style: TextStyle(fontSize: 22.0)),
-                          TextSpan(
-                            text: "Click here to get started",
-                          ),
-                        ],
-                      ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.add_circle,
+                            color: Theme.of(context).indicatorColor),
+                        const SizedBox(height: 10.0),
+                        Text(
+                          "Please create a new profile",
+                          style: TextStyle(
+                              fontSize: 18.0,
+                              color: Theme.of(context).indicatorColor,
+                              fontFamily: "Montserrat"),
+                        ),
+                        Text(
+                          "Click here to get started",
+                          style: TextStyle(
+                              color: Theme.of(context).indicatorColor,
+                              fontFamily: "Montserrat"),
+                        ),
+                      ],
                     ),
                   ),
                 ),

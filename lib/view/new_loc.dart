@@ -307,11 +307,11 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                     -1) {
                   if ((ref.watch(profilesProvider).indexWhere((element) =>
                               element.longitude ==
-                              double.parse(_longController.text)) ==
+                              double.parse(_latController.text)) ==
                           -1) &&
                       (ref.watch(profilesProvider).indexWhere((element) =>
                               element.latitude ==
-                              double.parse(_latController.text)) ==
+                              double.parse(_longController.text)) ==
                           -1)) {
                     setState(() => _saving = true);
                     LocalStorage.setProfileData(
