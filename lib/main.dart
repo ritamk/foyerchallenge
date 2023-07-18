@@ -7,7 +7,6 @@ import 'package:foyerchallenge/wrapper.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
-  await LocalStorage.deleteAllProfileData();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -18,25 +17,24 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Foyer Challenge',
       theme: ref.watch(themeProvider),
-      // theme: mainTheme,
       debugShowCheckedModeBanner: false,
       home: const WelcomeWrapper(),
     );
   }
 }
 
-ThemeData mainTheme = ThemeData(
-  fontFamily: "Montserrat",
-  useMaterial3: true,
-  // colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
-  colorScheme: ColorScheme.fromSwatch(
-    brightness: Brightness.dark,
-    primarySwatch: Colors.blue,
-    primaryColorDark: Colors.blue.shade800,
-    accentColor: Colors.blue.shade200,
-    cardColor: Colors.blue,
-    backgroundColor: Colors.blue,
-    errorColor: Colors.red.shade300,
-  ),
-  scaffoldBackgroundColor: Colors.blue.shade50,
-);
+// ThemeData mainTheme = ThemeData(
+//   fontFamily: "Montserrat",
+//   useMaterial3: true,
+//   // colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
+//   colorScheme: ColorScheme.fromSwatch(
+//     brightness: Brightness.dark,
+//     primarySwatch: Colors.blue,
+//     primaryColorDark: Colors.blue.shade800,
+//     accentColor: Colors.blue.shade200,
+//     cardColor: Colors.blue,
+//     backgroundColor: Colors.blue,
+//     errorColor: Colors.red.shade300,
+//   ),
+//   scaffoldBackgroundColor: Colors.blue.shade50,
+// );
