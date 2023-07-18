@@ -50,7 +50,11 @@ class DeviceProfileTile extends ConsumerWidget {
             const SizedBox(height: 10.0),
             Row(
               children: [
-                const Icon(Icons.location_on, size: 18.0),
+                Icon(
+                  Icons.location_on,
+                  size: 18.0,
+                  color: contrast,
+                ),
                 Text(
                   " ${profile.latitude}, ${profile.longitude}",
                   style: TextStyle(color: contrast, fontSize: 16.0),
