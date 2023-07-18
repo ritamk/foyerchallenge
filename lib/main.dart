@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foyerchallenge/controller/local.dart';
 import 'package:foyerchallenge/controller/provider.dart';
-import 'package:foyerchallenge/view/home.dart';
+import 'package:foyerchallenge/wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await LocalStorage.init();
-  await LocalStorage.deleteAllProfileData();
+  // await LocalStorage.deleteAllProfileData();
   runApp(const ProviderScope(child: MyApp()));
 }
 
@@ -20,7 +20,7 @@ class MyApp extends ConsumerWidget {
       theme: ref.watch(themeProvider),
       // theme: mainTheme,
       debugShowCheckedModeBanner: false,
-      home: const HomeView(),
+      home: const WelcomeWrapper(),
     );
   }
 }

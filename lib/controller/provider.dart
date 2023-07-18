@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foyerchallenge/model/profile_model.dart';
 
 final StateProvider<MaterialColor> colorProvider =
     StateProvider<MaterialColor>((ref) => Colors.green);
@@ -26,3 +27,9 @@ final StateProvider<ThemeData> themeProvider = StateProvider<ThemeData>((ref) {
     scaffoldBackgroundColor: color.shade50,
   );
 });
+
+final StateProvider<List<ProfileModel>> profilesProvider =
+    StateProvider<List<ProfileModel>>((ref) => <ProfileModel>[]);
+
+final StateProvider<String> selectedProvider =
+    StateProvider<String>((ref) => "");

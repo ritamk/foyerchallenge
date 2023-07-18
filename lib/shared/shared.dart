@@ -20,10 +20,11 @@ ScaffoldFeatureController commonSnackbar(String text, BuildContext context,
     {double textSize = 16.0}) {
   const double rad = 15.0;
   return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    backgroundColor: Colors.black,
     behavior: SnackBarBehavior.floating,
     content: Text(
       text,
-      style: TextStyle(fontSize: textSize),
+      style: TextStyle(fontSize: textSize, color: Colors.white),
     ),
     padding: const EdgeInsets.all(18.0),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(rad)),

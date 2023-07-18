@@ -1,21 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:foyerchallenge/controller/local.dart';
+import 'package:foyerchallenge/controller/provider.dart';
+import 'package:foyerchallenge/model/profile_model.dart';
 import 'package:foyerchallenge/shared/constants.dart';
 import 'package:foyerchallenge/shared/shared.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:location/location.dart' as loc;
 
-class NewLocationDialog extends StatefulWidget {
+class NewLocationDialog extends ConsumerStatefulWidget {
   const NewLocationDialog({super.key});
 
   @override
-  State<NewLocationDialog> createState() => _NewLocationDialogState();
+  ConsumerState<NewLocationDialog> createState() => _NewLocationDialogState();
 }
 
-class _NewLocationDialogState extends State<NewLocationDialog> {
+class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
   final double fontSize = 16.0;
   Position? _position;
   bool _gettingLocation = false;
+  bool _saving = false;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -26,6 +31,9 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
   final FocusNode _longScope = FocusNode();
   final FocusNode _latScope = FocusNode();
   final FocusNode _nameScope = FocusNode();
+
+  String _selectedColor = "";
+  String _selectedFont = "";
 
   @override
   void initState() {
@@ -60,13 +68,18 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                             focusNode: _longScope,
                             decoration:
                                 textInputDecoration(context, "Longitude"),
-                            validator: (value) =>
-                                ((double.parse(value ?? "0.0") >
-                                            LONG_LIMIT[0]) &&
-                                        (double.parse(value ?? "0.0") <
-                                            LONG_LIMIT[1]))
-                                    ? null
-                                    : "Invalid longitude",
+                            validator: (value) {
+                              if (value != null && value.isNotEmpty) {
+                                if (((double.parse(value) > LONG_LIMIT[0]) &&
+                                    (double.parse(value) < LONG_LIMIT[1]))) {
+                                  return null;
+                                } else {
+                                  return "Invalid longitude";
+                                }
+                              } else {
+                                return "Enter longitude";
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (val) =>
@@ -78,13 +91,18 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                             focusNode: _latScope,
                             decoration:
                                 textInputDecoration(context, "Latitude"),
-                            validator: (value) =>
-                                ((double.parse(value ?? "0.0") <
-                                            LAT_LIMIT[0]) &&
-                                        (double.parse(value ?? "0.0") >
-                                            LAT_LIMIT[1]))
-                                    ? null
-                                    : "Invalid latitude",
+                            validator: (value) {
+                              if (value != null && value.isNotEmpty) {
+                                if (((double.parse(value) < LAT_LIMIT[0]) &&
+                                    (double.parse(value) > LAT_LIMIT[1]))) {
+                                  return null;
+                                } else {
+                                  return "Invalid latitude";
+                                }
+                              } else {
+                                return "Enter latitude";
+                              }
+                            },
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (val) =>
@@ -138,11 +156,13 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  onSelected: (value) {},
+                  initialValue: "Green",
+                  onSelected: (value) => setState(() => _selectedColor = value),
                   itemBuilder: (context) {
-                    return <PopupMenuItem<String>>[
+                    return <PopupMenuEntry<String>>[
                       for (String elem in THEMES.keys)
                         PopupMenuItem(
+                          value: elem,
                           child: Row(
                             children: [
                               Expanded(child: Text(elem)),
@@ -171,17 +191,33 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Color",
-                          style: TextStyle(
-                            fontSize: fontSize,
-                          ),
-                        ),
+                        _selectedColor.isNotEmpty
+                            ? Text(
+                                _selectedColor,
+                                style: TextStyle(
+                                  fontSize: fontSize,
+                                ),
+                              )
+                            : Text(
+                                "Color",
+                                style: TextStyle(
+                                  fontSize: fontSize,
+                                ),
+                              ),
                         const SizedBox(width: 10.0),
-                        const Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 18.0,
-                        ),
+                        _selectedColor.isNotEmpty
+                            ? Container(
+                                height: 30.0,
+                                width: 30.0,
+                                decoration: BoxDecoration(
+                                  color: THEMES[_selectedColor],
+                                  shape: BoxShape.circle,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 18.0,
+                              ),
                       ],
                     ),
                   ),
@@ -192,11 +228,13 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                       const BoxConstraints.expand(width: 200.0, height: 200.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
-                  onSelected: (value) {},
+                  initialValue: "Montserrat",
+                  onSelected: (value) => setState(() => _selectedFont = value),
                   itemBuilder: (context) {
-                    return <PopupMenuItem<String>>[
+                    return <PopupMenuEntry<String>>[
                       for (String elem in FONTS)
                         PopupMenuItem(
+                          value: elem,
                           child: Text(
                             elem,
                             style: TextStyle(fontFamily: elem),
@@ -214,21 +252,32 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Font",
-                          style: TextStyle(
-                            fontSize: fontSize,
-                          ),
-                        ),
+                        _selectedFont.isNotEmpty
+                            ? Text(
+                                _selectedFont,
+                                style: TextStyle(
+                                  fontFamily: _selectedFont,
+                                  fontSize: fontSize,
+                                ),
+                              )
+                            : Text(
+                                "Font",
+                                style: TextStyle(
+                                  fontSize: fontSize,
+                                ),
+                              ),
                         const SizedBox(width: 10.0),
-                        const Icon(
-                          Icons.keyboard_arrow_down,
-                          size: 18.0,
-                        ),
+                        _selectedFont.isNotEmpty
+                            ? const SizedBox(height: 0.0, width: 0.0)
+                            : const Icon(
+                                Icons.keyboard_arrow_down,
+                                size: 18.0,
+                              ),
                       ],
                     ),
                   ),
                 ),
+                const SizedBox(height: 10.0),
               ],
             ),
           ),
@@ -250,19 +299,66 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
           ),
           CupertinoDialogAction(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {}
+              if (_formKey.currentState!.validate() &&
+                  _selectedColor.isNotEmpty &&
+                  _selectedFont.isNotEmpty) {
+                if (ref.watch(profilesProvider).indexWhere(
+                        (element) => element.name == _nameController.text) ==
+                    -1) {
+                  if ((ref.watch(profilesProvider).indexWhere((element) =>
+                              element.longitude ==
+                              double.parse(_longController.text)) ==
+                          -1) &&
+                      (ref.watch(profilesProvider).indexWhere((element) =>
+                              element.latitude ==
+                              double.parse(_latController.text)) ==
+                          -1)) {
+                    setState(() => _saving = true);
+                    LocalStorage.setProfileData(
+                      ProfileModel(
+                        name: _nameController.text,
+                        color: _selectedColor,
+                        font: _selectedFont,
+                        longitude: double.parse(_longController.text),
+                        latitude: double.parse(_latController.text),
+                      ),
+                    )
+                        .whenComplete(() =>
+                            LocalStorage.setSelectedData(_nameController.text))
+                        .whenComplete(() {
+                      ref.read(profilesProvider.notifier).state =
+                          LocalStorage.getProfileData() ?? <ProfileModel>[];
+                      ref.read(selectedProvider.notifier).state =
+                          LocalStorage.getSelectedData() ?? "";
+                      setState(() => _saving = false);
+                      Navigator.of(context).pop();
+                    });
+                  } else {
+                    commonSnackbar("Location already exists", context);
+                  }
+                } else {
+                  commonSnackbar("Name already exists", context);
+                }
+              } else {
+                commonSnackbar("Please input all the required values", context);
+              }
             },
-            child: Text(
-              "Save",
-              style: TextStyle(
-                fontFamily: Theme.of(context)
-                    .primaryTextTheme
-                    .displayMedium!
-                    .fontFamily,
-                color: Theme.of(context).indicatorColor,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: !_saving
+                ? Text(
+                    "Save",
+                    style: TextStyle(
+                      fontFamily: Theme.of(context)
+                          .primaryTextTheme
+                          .displayMedium!
+                          .fontFamily,
+                      color: Theme.of(context).indicatorColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                : CupertinoActivityIndicator(
+                    color: Theme.of(context).indicatorColor,
+                    radius: 10.0,
+                  ),
           ),
         ],
       ),

@@ -4,14 +4,27 @@ import 'package:foyerchallenge/model/profile_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
-  static const String _profileKey = "setProfileKey";
+  static const String _profileKey = "profileKey";
+  static const String _selectedKey = "selectedKey";
 
   static SharedPreferences? sharedPreferences;
 
   static Future init() async =>
       sharedPreferences = await SharedPreferences.getInstance();
 
-  static Future<void> setProfileData(ProfileModel details) async {
+  static Future<bool> setSelectedData(String name) async {
+    return await sharedPreferences!.setString(_selectedKey, name);
+  }
+
+  static String? getSelectedData() {
+    try {
+      return sharedPreferences!.getString(_selectedKey);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<bool> setProfileData(ProfileModel details) async {
     final String? obj = sharedPreferences!.getString(_profileKey);
     List<dynamic> list;
 
@@ -29,11 +42,10 @@ class LocalStorage {
       "longitude": details.longitude,
     });
 
-    await sharedPreferences!.setString(_profileKey, jsonEncode(list));
-    return;
+    return await sharedPreferences!.setString(_profileKey, jsonEncode(list));
   }
 
-  static Future<List<ProfileModel>?> getProfileData() async {
+  static List<ProfileModel>? getProfileData() {
     try {
       final String? data = sharedPreferences!.getString(_profileKey);
       List<dynamic> decoded = [];
