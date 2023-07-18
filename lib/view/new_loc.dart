@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foyerchallenge/model/profile_model.dart';
 import 'package:foyerchallenge/shared/constants.dart';
 import 'package:foyerchallenge/shared/shared.dart';
 import 'package:geolocator/geolocator.dart';
@@ -141,17 +140,19 @@ class _NewLocationDialogState extends State<NewLocationDialog> {
                   ),
                   onSelected: (value) {},
                   itemBuilder: (context) {
-                    return <PopupMenuItem<ThemeSelectionModel>>[
-                      for (ThemeSelectionModel elem in THEMES)
+                    return <PopupMenuItem<String>>[
+                      for (String elem in THEMES.keys)
                         PopupMenuItem(
                           child: Row(
                             children: [
-                              Expanded(child: Text(elem.colorName)),
+                              Expanded(child: Text(elem)),
                               Container(
                                 height: 30.0,
                                 width: 30.0,
                                 decoration: BoxDecoration(
-                                  color: elem.color,
+                                  border: Border.all(
+                                      color: Theme.of(context).indicatorColor),
+                                  color: THEMES[elem],
                                   shape: BoxShape.circle,
                                 ),
                               )

@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:foyerchallenge/shared/constants.dart';
+import 'package:foyerchallenge/controller/local.dart';
+import 'package:foyerchallenge/controller/provider.dart';
 import 'package:foyerchallenge/view/home.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorage.init();
+  await LocalStorage.deleteAllProfileData();
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'Foyer Challenge',
-      theme: mainTheme,
+      theme: ref.watch(themeProvider),
+      // theme: mainTheme,
       debugShowCheckedModeBanner: false,
       home: const HomeView(),
     );
@@ -26,12 +31,12 @@ ThemeData mainTheme = ThemeData(
   // colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple),
   colorScheme: ColorScheme.fromSwatch(
     brightness: Brightness.dark,
-    primarySwatch: MAIN_COLOR,
-    primaryColorDark: MAIN_COLOR.shade800,
-    accentColor: MAIN_COLOR.shade200,
-    cardColor: MAIN_COLOR,
-    backgroundColor: MAIN_COLOR,
+    primarySwatch: Colors.blue,
+    primaryColorDark: Colors.blue.shade800,
+    accentColor: Colors.blue.shade200,
+    cardColor: Colors.blue,
+    backgroundColor: Colors.blue,
     errorColor: Colors.red.shade300,
   ),
-  scaffoldBackgroundColor: MAIN_COLOR.shade50,
+  scaffoldBackgroundColor: Colors.blue.shade50,
 );

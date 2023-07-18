@@ -1,7 +1,6 @@
 // ignore_for_file: constant_identifier_names, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:foyerchallenge/model/profile_model.dart';
 
 const double PAGE_PADDING = 18.0;
 
@@ -30,17 +29,15 @@ InputDecoration textInputDecoration(BuildContext context, String label) {
 const List<double> LONG_LIMIT = [68.245483, 97.420296];
 const List<double> LAT_LIMIT = [37.057941, 6.658559];
 
-final List<ThemeSelectionModel> THEMES = [
-  ThemeSelectionModel(colorName: "Amber", color: Colors.amber),
-  ThemeSelectionModel(colorName: "Indigo", color: Colors.indigo),
-  ThemeSelectionModel(colorName: "Blue Grey", color: Colors.blueGrey),
-  ThemeSelectionModel(colorName: "Teal", color: Colors.teal),
-  ThemeSelectionModel(colorName: "Deep Purple", color: Colors.deepPurple),
-  ThemeSelectionModel(colorName: "Green", color: Colors.green),
-  ThemeSelectionModel(colorName: "Orange", color: Colors.orange),
-];
-
-const MaterialColor MAIN_COLOR = Colors.blue;
+final Map<String, MaterialColor> THEMES = {
+  "Amber": Colors.amber,
+  "Indigo": Colors.indigo,
+  "Blue Grey": Colors.blueGrey,
+  "Teal": Colors.teal,
+  "Deep Purple": Colors.deepPurple,
+  "Green": Colors.green,
+  "Orange": Colors.orange,
+};
 
 final List<String> FONTS = [
   "Montserrat",
