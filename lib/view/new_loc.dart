@@ -330,6 +330,9 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                           LocalStorage.getProfileData() ?? <ProfileModel>[];
                       ref.read(selectedProvider.notifier).state =
                           LocalStorage.getSelectedData() ?? "";
+                      ref.read(colorProvider.notifier).state =
+                          THEMES[_selectedColor] ?? Colors.green;
+                      ref.read(fontProvider.notifier).state = _selectedFont;
                       setState(() => _saving = false);
                       Navigator.of(context).pop();
                     });
