@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:foyerchallenge/controller/local.dart';
 import 'package:foyerchallenge/controller/provider.dart';
 import 'package:foyerchallenge/model/profile_model.dart';
@@ -335,13 +336,14 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                       Navigator.of(context).pop();
                     });
                   } else {
-                    commonSnackbar("Location already exists", context);
+                    Fluttertoast.showToast(msg: "Location already exists");
                   }
                 } else {
-                  commonSnackbar("Name already exists", context);
+                  Fluttertoast.showToast(msg: "Name already exists");
                 }
               } else {
-                commonSnackbar("Please input all the required values", context);
+                Fluttertoast.showToast(
+                    msg: "Please input all the required values");
               }
             },
             child: !_saving
