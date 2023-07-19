@@ -119,8 +119,9 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                         try {
                           _position = await determinePosition();
                           _longController.text =
-                              _position!.longitude.toString();
-                          _latController.text = _position!.latitude.toString();
+                              _position!.longitude.toString().substring(0, 8);
+                          _latController.text =
+                              _position!.latitude.toString().substring(0, 8);
                         } catch (e) {
                           commonSnackbar(e.toString(), context);
                         }
