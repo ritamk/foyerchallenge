@@ -156,7 +156,6 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  initialValue: "Green",
                   onSelected: (value) => setState(() => _selectedColor = value),
                   itemBuilder: (context) {
                     return <PopupMenuEntry<String>>[
@@ -228,7 +227,6 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                       const BoxConstraints.expand(width: 200.0, height: 200.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0)),
-                  initialValue: "Montserrat",
                   onSelected: (value) => setState(() => _selectedFont = value),
                   itemBuilder: (context) {
                     return <PopupMenuEntry<String>>[
