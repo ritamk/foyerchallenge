@@ -70,25 +70,31 @@ class DeviceProfileTile extends ConsumerWidget {
                 color: contrast,
                 borderRadius: BorderRadius.circular(25.0),
               ),
-              child: RichText(
-                textScaleFactor: ref.watch(textScaleProvider),
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  style: TextStyle(
-                    color: THEMES[profile.color],
-                    fontWeight: FontWeight.bold,
-                    fontFamily:
-                        Theme.of(context).textTheme.bodyMedium!.fontFamily,
-                    fontSize: 18.0,
-                  ),
-                  children: [
-                    TextSpan(text: "${profile.color}, "),
-                    TextSpan(
-                      text: profile.font,
-                      style: TextStyle(fontFamily: profile.font),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "${profile.color}, ",
+                    textScaleFactor: ref.watch(textScaleProvider),
+                    style: TextStyle(
+                      color: THEMES[profile.color],
+                      fontWeight: FontWeight.bold,
+                      fontFamily:
+                          Theme.of(context).textTheme.bodyMedium!.fontFamily,
+                      fontSize: 18.0,
                     ),
-                  ],
-                ),
+                  ),
+                  Text(
+                    profile.font,
+                    textScaleFactor: profile.size,
+                    style: TextStyle(
+                      color: THEMES[profile.color],
+                      fontWeight: FontWeight.bold,
+                      fontFamily: profile.font,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],

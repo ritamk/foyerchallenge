@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ProfileModel {
   final String name;
   final String color;
