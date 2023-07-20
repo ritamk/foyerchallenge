@@ -21,6 +21,7 @@ class DeviceProfileTile extends ConsumerWidget {
         ref.read(colorProvider.notifier).state =
             THEMES[profile.color] ?? Colors.green;
         ref.read(fontProvider.notifier).state = profile.font;
+        ref.read(textScaleProvider.notifier).state = profile.size;
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 12.0),
@@ -70,6 +71,7 @@ class DeviceProfileTile extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(25.0),
               ),
               child: RichText(
+                textScaleFactor: ref.watch(textScaleProvider),
                 textAlign: TextAlign.center,
                 text: TextSpan(
                   style: TextStyle(

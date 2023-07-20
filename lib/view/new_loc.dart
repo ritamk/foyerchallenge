@@ -35,6 +35,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
 
   String _selectedColor = "";
   String _selectedFont = "";
+  double _selectedSize = 1.0;
 
   @override
   void initState() {
@@ -48,6 +49,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
       child: CupertinoAlertDialog(
         title: Text(
           "Add New Profile",
+          textScaleFactor: ref.watch(textScaleProvider),
           style: TextStyle(
             fontFamily:
                 Theme.of(context).primaryTextTheme.displayMedium!.fontFamily,
@@ -64,50 +66,58 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                     Flexible(
                       child: Column(
                         children: [
-                          TextFormField(
-                            controller: _longController,
-                            focusNode: _longScope,
-                            decoration:
-                                textInputDecoration(context, "Longitude"),
-                            validator: (value) {
-                              if (value != null && value.isNotEmpty) {
-                                if (((double.parse(value) > LONG_LIMIT[0]) &&
-                                    (double.parse(value) < LONG_LIMIT[1]))) {
-                                  return null;
+                          MediaQuery(
+                            data: MediaQuery.of(context).copyWith(
+                                textScaleFactor: ref.watch(textScaleProvider)),
+                            child: TextFormField(
+                              controller: _longController,
+                              focusNode: _longScope,
+                              decoration:
+                                  textInputDecoration(context, "Longitude"),
+                              validator: (value) {
+                                if (value != null && value.isNotEmpty) {
+                                  if (((double.parse(value) > LONG_LIMIT[0]) &&
+                                      (double.parse(value) < LONG_LIMIT[1]))) {
+                                    return null;
+                                  } else {
+                                    return "Invalid longitude";
+                                  }
                                 } else {
-                                  return "Invalid longitude";
+                                  return "Enter longitude";
                                 }
-                              } else {
-                                return "Enter longitude";
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (val) =>
-                                FocusScope.of(context).requestFocus(_latScope),
+                              },
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
+                              onFieldSubmitted: (val) => FocusScope.of(context)
+                                  .requestFocus(_latScope),
+                            ),
                           ),
                           const SizedBox(height: 10.0),
-                          TextFormField(
-                            controller: _latController,
-                            focusNode: _latScope,
-                            decoration:
-                                textInputDecoration(context, "Latitude"),
-                            validator: (value) {
-                              if (value != null && value.isNotEmpty) {
-                                if (((double.parse(value) < LAT_LIMIT[0]) &&
-                                    (double.parse(value) > LAT_LIMIT[1]))) {
-                                  return null;
+                          MediaQuery(
+                            data: MediaQuery.of(context).copyWith(
+                                textScaleFactor: ref.watch(textScaleProvider)),
+                            child: TextFormField(
+                              controller: _latController,
+                              focusNode: _latScope,
+                              decoration:
+                                  textInputDecoration(context, "Latitude"),
+                              validator: (value) {
+                                if (value != null && value.isNotEmpty) {
+                                  if (((double.parse(value) < LAT_LIMIT[0]) &&
+                                      (double.parse(value) > LAT_LIMIT[1]))) {
+                                    return null;
+                                  } else {
+                                    return "Invalid latitude";
+                                  }
                                 } else {
-                                  return "Invalid latitude";
+                                  return "Enter latitude";
                                 }
-                              } else {
-                                return "Enter latitude";
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (val) =>
-                                FocusScope.of(context).requestFocus(_nameScope),
+                              },
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
+                              onFieldSubmitted: (val) => FocusScope.of(context)
+                                  .requestFocus(_nameScope),
+                            ),
                           ),
                         ],
                       ),
@@ -142,14 +152,18 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                   ],
                 ),
                 const SizedBox(height: 10.0),
-                TextFormField(
-                  controller: _nameController,
-                  focusNode: _nameScope,
-                  decoration: textInputDecoration(context, "Name"),
-                  validator: (value) =>
-                      value!.isNotEmpty ? null : "Please enter a name",
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (val) => FocusScope.of(context).unfocus(),
+                MediaQuery(
+                  data: MediaQuery.of(context)
+                      .copyWith(textScaleFactor: ref.watch(textScaleProvider)),
+                  child: TextFormField(
+                    controller: _nameController,
+                    focusNode: _nameScope,
+                    decoration: textInputDecoration(context, "Name"),
+                    validator: (value) =>
+                        value!.isNotEmpty ? null : "Please enter a name",
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (val) => FocusScope.of(context).unfocus(),
+                  ),
                 ),
                 const SizedBox(height: 10.0),
                 PopupMenuButton(
@@ -166,7 +180,11 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                           value: elem,
                           child: Row(
                             children: [
-                              Expanded(child: Text(elem)),
+                              Expanded(
+                                child: Text(elem,
+                                    textScaleFactor:
+                                        ref.watch(textScaleProvider)),
+                              ),
                               Container(
                                 height: 30.0,
                                 width: 30.0,
@@ -195,12 +213,14 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                         _selectedColor.isNotEmpty
                             ? Text(
                                 _selectedColor,
+                                textScaleFactor: ref.watch(textScaleProvider),
                                 style: TextStyle(
                                   fontSize: fontSize,
                                 ),
                               )
                             : Text(
                                 "Color",
+                                textScaleFactor: ref.watch(textScaleProvider),
                                 style: TextStyle(
                                   fontSize: fontSize,
                                 ),
@@ -237,6 +257,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                           value: elem,
                           child: Text(
                             elem,
+                            textScaleFactor: ref.watch(textScaleProvider),
                             style: TextStyle(fontFamily: elem),
                           ),
                         ),
@@ -262,6 +283,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                               )
                             : Text(
                                 "Font",
+                                textScaleFactor: ref.watch(textScaleProvider),
                                 style: TextStyle(
                                   fontSize: fontSize,
                                 ),
@@ -277,7 +299,28 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 20.0),
+                Text(
+                  "Text size",
+                  textScaleFactor: ref.watch(textScaleProvider),
+                  style: TextStyle(fontSize: fontSize),
+                ),
+                Tooltip(
+                  message: "Select text size",
+                  child: MediaQuery(
+                    data: MediaQuery.of(context)
+                        .copyWith(textScaleFactor: _selectedSize),
+                    child: Slider(
+                      label: "Text size",
+                      value: _selectedSize,
+                      max: 1.5,
+                      min: 0.5,
+                      divisions: 10,
+                      onChanged: (value) =>
+                          setState(() => _selectedSize = value),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -319,6 +362,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                         name: _nameController.text,
                         color: _selectedColor,
                         font: _selectedFont,
+                        size: _selectedSize,
                         longitude: double.parse(_longController.text),
                         latitude: double.parse(_latController.text),
                       ),
@@ -333,6 +377,8 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                       ref.read(colorProvider.notifier).state =
                           THEMES[_selectedColor] ?? Colors.green;
                       ref.read(fontProvider.notifier).state = _selectedFont;
+                      ref.read(textScaleProvider.notifier).state =
+                          _selectedSize;
                       setState(() => _saving = false);
                       Navigator.of(context).pop();
                     });

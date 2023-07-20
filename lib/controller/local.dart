@@ -37,6 +37,7 @@ class LocalStorage {
     list.add({
       "name": details.name,
       "font": details.font,
+      "size": details.size,
       "color": details.color,
       "latitude": details.latitude,
       "longitude": details.longitude,
@@ -58,6 +59,7 @@ class LocalStorage {
             name: element["name"],
             color: element["color"],
             font: element["font"],
+            size: element["size"],
             longitude: element["latitude"],
             latitude: element["longitude"],
           ));

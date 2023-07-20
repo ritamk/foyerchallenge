@@ -18,7 +18,11 @@ class MyApp extends ConsumerWidget {
       title: 'Foyer Challenge',
       theme: ref.watch(themeProvider),
       debugShowCheckedModeBanner: false,
-      home: const WelcomeWrapper(),
+      home: MediaQuery(
+        data: MediaQuery.of(context)
+            .copyWith(textScaleFactor: ref.watch(textScaleProvider)),
+        child: const WelcomeWrapper(),
+      ),
     );
   }
 }

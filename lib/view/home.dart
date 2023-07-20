@@ -95,6 +95,7 @@ class HomeView extends ConsumerWidget {
                             child: IconButton(
                               tooltip: "Add Profile",
                               onPressed: () => showCupertinoDialog(
+                                barrierDismissible: true,
                                 context: context,
                                 builder: (context) => const NewLocationDialog(),
                               ),

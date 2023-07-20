@@ -8,6 +8,9 @@ final StateProvider<MaterialColor> colorProvider =
 final StateProvider<String> fontProvider =
     StateProvider<String>((ref) => "Montserrat");
 
+final StateProvider<double> textScaleProvider =
+    StateProvider<double>((ref) => 1.0);
+
 final StateProvider<ThemeData> themeProvider = StateProvider<ThemeData>((ref) {
   final MaterialColor color = ref.watch(colorProvider);
   final String font = ref.watch(fontProvider);
