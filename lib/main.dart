@@ -20,7 +20,7 @@ class MyApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       home: MediaQuery(
         data: MediaQuery.of(context)
-            .copyWith(textScaleFactor: ref.watch(textScaleProvider)),
+            .copyWith(textScaleFactor: ref.watch(selectedThemeProvider).scale),
         child: const WelcomeWrapper(),
       ),
     );

@@ -28,10 +28,11 @@ class _WelcomeWrapper extends ConsumerState<WelcomeWrapper> {
     if (selected != null && profiles != null) {
       int index = profiles
           .indexWhere((ProfileModel element) => element.name == selected);
-      ref.read(colorProvider.notifier).state =
-          THEMES[profiles[index].color] ?? Colors.green;
-      ref.read(fontProvider.notifier).state = profiles[index].font;
-      ref.read(textScaleProvider.notifier).state = profiles[index].size;
+      ref.read(selectedThemeProvider.notifier).state = ThemeProviderModel(
+        color: THEMES[profiles[index].color] ?? Colors.green,
+        font: profiles[index].font,
+        scale: profiles[index].size,
+      );
     }
 
     setState(() => goHome = true);

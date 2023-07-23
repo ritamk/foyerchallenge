@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:foyerchallenge/model/profile_model.dart';
 
-final StateProvider<MaterialColor> colorProvider =
-    StateProvider<MaterialColor>((ref) => Colors.green);
-
-final StateProvider<String> fontProvider =
-    StateProvider<String>((ref) => "Montserrat");
-
-final StateProvider<double> textScaleProvider =
-    StateProvider<double>((ref) => 1.0);
+final StateProvider<ThemeProviderModel> selectedThemeProvider =
+    StateProvider<ThemeProviderModel>((ref) => ThemeProviderModel(
+        color: Colors.green, font: "Montserrat", scale: 1.0));
 
 final StateProvider<ThemeData> themeProvider = StateProvider<ThemeData>((ref) {
-  final MaterialColor color = ref.watch(colorProvider);
-  final String font = ref.watch(fontProvider);
+  final MaterialColor color = ref.watch(selectedThemeProvider).color;
+  final String font = ref.watch(selectedThemeProvider).font;
 
   return ThemeData(
     fontFamily: font,

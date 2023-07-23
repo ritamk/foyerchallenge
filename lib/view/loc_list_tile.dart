@@ -18,10 +18,11 @@ class DeviceProfileTile extends ConsumerWidget {
       onTap: () async {
         await LocalStorage.setSelectedData(profile.name);
         ref.read(selectedProvider.notifier).state = profile.name;
-        ref.read(colorProvider.notifier).state =
-            THEMES[profile.color] ?? Colors.green;
-        ref.read(fontProvider.notifier).state = profile.font;
-        ref.read(textScaleProvider.notifier).state = profile.size;
+        ref.read(selectedThemeProvider.notifier).state = ThemeProviderModel(
+          color: THEMES[profile.color] ?? Colors.green,
+          font: profile.font,
+          scale: profile.size,
+        );
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 12.0),
@@ -75,7 +76,7 @@ class DeviceProfileTile extends ConsumerWidget {
                 children: [
                   Text(
                     "${profile.color}, ",
-                    textScaleFactor: ref.watch(textScaleProvider),
+                    textScaleFactor: ref.watch(selectedThemeProvider).scale,
                     style: TextStyle(
                       color: THEMES[profile.color],
                       fontWeight: FontWeight.bold,

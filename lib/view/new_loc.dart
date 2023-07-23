@@ -49,7 +49,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
       child: CupertinoAlertDialog(
         title: Text(
           "Add New Profile",
-          textScaleFactor: ref.watch(textScaleProvider),
+          textScaleFactor: ref.watch(selectedThemeProvider).scale,
           style: TextStyle(
             fontFamily:
                 Theme.of(context).primaryTextTheme.displayMedium!.fontFamily,
@@ -68,7 +68,8 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                         children: [
                           MediaQuery(
                             data: MediaQuery.of(context).copyWith(
-                                textScaleFactor: ref.watch(textScaleProvider)),
+                                textScaleFactor:
+                                    ref.watch(selectedThemeProvider).scale),
                             child: TextFormField(
                               controller: _longController,
                               focusNode: _longScope,
@@ -95,7 +96,8 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                           const SizedBox(height: 10.0),
                           MediaQuery(
                             data: MediaQuery.of(context).copyWith(
-                                textScaleFactor: ref.watch(textScaleProvider)),
+                                textScaleFactor:
+                                    ref.watch(selectedThemeProvider).scale),
                             child: TextFormField(
                               controller: _latController,
                               focusNode: _latScope,
@@ -153,8 +155,8 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                 ),
                 const SizedBox(height: 10.0),
                 MediaQuery(
-                  data: MediaQuery.of(context)
-                      .copyWith(textScaleFactor: ref.watch(textScaleProvider)),
+                  data: MediaQuery.of(context).copyWith(
+                      textScaleFactor: ref.watch(selectedThemeProvider).scale),
                   child: TextFormField(
                     controller: _nameController,
                     focusNode: _nameScope,
@@ -183,7 +185,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                               Expanded(
                                 child: Text(elem,
                                     textScaleFactor:
-                                        ref.watch(textScaleProvider)),
+                                        ref.watch(selectedThemeProvider).scale),
                               ),
                               Container(
                                 height: 30.0,
@@ -213,14 +215,16 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                         _selectedColor.isNotEmpty
                             ? Text(
                                 _selectedColor,
-                                textScaleFactor: ref.watch(textScaleProvider),
+                                textScaleFactor:
+                                    ref.watch(selectedThemeProvider).scale,
                                 style: TextStyle(
                                   fontSize: fontSize,
                                 ),
                               )
                             : Text(
                                 "Color",
-                                textScaleFactor: ref.watch(textScaleProvider),
+                                textScaleFactor:
+                                    ref.watch(selectedThemeProvider).scale,
                                 style: TextStyle(
                                   fontSize: fontSize,
                                 ),
@@ -257,7 +261,8 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                           value: elem,
                           child: Text(
                             elem,
-                            textScaleFactor: ref.watch(textScaleProvider),
+                            textScaleFactor:
+                                ref.watch(selectedThemeProvider).scale,
                             style: TextStyle(fontFamily: elem),
                           ),
                         ),
@@ -283,7 +288,8 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                               )
                             : Text(
                                 "Font",
-                                textScaleFactor: ref.watch(textScaleProvider),
+                                textScaleFactor:
+                                    ref.watch(selectedThemeProvider).scale,
                                 style: TextStyle(
                                   fontSize: fontSize,
                                 ),
@@ -302,7 +308,7 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                 const SizedBox(height: 20.0),
                 Text(
                   "Text size",
-                  textScaleFactor: ref.watch(textScaleProvider),
+                  textScaleFactor: ref.watch(selectedThemeProvider).scale,
                   style: TextStyle(fontSize: fontSize),
                 ),
                 Tooltip(
@@ -374,11 +380,12 @@ class _NewLocationDialogState extends ConsumerState<NewLocationDialog> {
                           LocalStorage.getProfileData() ?? <ProfileModel>[];
                       ref.read(selectedProvider.notifier).state =
                           LocalStorage.getSelectedData() ?? "";
-                      ref.read(colorProvider.notifier).state =
-                          THEMES[_selectedColor] ?? Colors.green;
-                      ref.read(fontProvider.notifier).state = _selectedFont;
-                      ref.read(textScaleProvider.notifier).state =
-                          _selectedSize;
+                      ref.read(selectedThemeProvider.notifier).state =
+                          ThemeProviderModel(
+                        color: THEMES[_selectedColor] ?? Colors.green,
+                        font: _selectedFont,
+                        scale: _selectedSize,
+                      );
                       setState(() => _saving = false);
                       Navigator.of(context).pop();
                     });
